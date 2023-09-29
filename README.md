@@ -11,3 +11,5 @@ Most, but not all, of these games use unicode so you will need a good terminal p
  Not playable. Half baked demo to see what pong would look like if played on one line.
 ## TicTacToe
  What it says on the tin. *Does not use unicode.*
+## Big Time
+ Not even a game. Just shows the time in middle of the screen. Good as a screen saver or something. *Does not use unicode.*
