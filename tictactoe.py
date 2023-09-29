@@ -1,11 +1,11 @@
 import random
 
 def show():
-    print board [0],'|',board [1],'|',board [2]
-    print '----------'
-    print board [3],'|',board [4],'|',board [5]
-    print '----------'
-    print board [6],'|',board [7],'|',board [8]
+    print(board [0],'|',board [1],'|',board [2])
+    print('----------')
+    print(board [3],'|',board [4],'|',board [5])
+    print('----------')
+    print(board [6],'|',board [7],'|',board [8])
     
 def is_winner(player_being_checked):
     b = board
@@ -35,14 +35,14 @@ def is_winner(player_being_checked):
 
 def play():
     while True:
-        input = int(raw_input("Select a spot: "))
+        spot = int(input('Select a spot: '))
          
-        if board[input] not in 'xo':
-            board[input] = 'x'
+        if board[spot] not in 'xo':
+            board[spot] = 'x'
             
             if is_winner('x'):
                 
-                print 'Congratulations you win! :)'
+                print('Congratulations you win! :)')
                 break
 
 
@@ -54,21 +54,21 @@ def play():
                     board[opponent] = 'o'
                     break
             if is_winner('o'): # now inside is_winner the variable p = 'o'
-                print 'Computer wins :('
+                print('Computer wins :(')
                 break
         else:
-            print 'this spot is taken'
+            print('this spot is taken')
         show()
 
 if __name__ == '__main__':
-    print 'Tic Tac Toe. In this version of Tic Tac Toe you are X and the computer is O. To place your X piece type a number from 0-8 to play it on the board. Enjoy' 
-    board = [str(x) for x in xrange(9)]
+    print('Tic Tac Toe. In this version of Tic Tac Toe you are X and the computer is O. To place your X piece type a number from 0-8 to play it on the board. Enjoy') 
+    board = [str(x) for x in range(9)]
     play_again = 'y'
     while play_again.startswith('y'):
         show()
         play()
-        play_again = raw_input('Do you want to play again?')
-        board = [str(x) for x in xrange(9)]
+        play_again = input('Do you want to play again? ')
+        board = [str(x) for x in range(9)]
             
-    print 'Good Bye'
+    print('Good Bye')
     
