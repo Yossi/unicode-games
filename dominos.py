@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # This Python file uses the following encoding: utf-8
 
-#http://en.wikipedia.org/wiki/Domino
+# http://en.wikipedia.org/wiki/Domino
 
 # While this will work fine on most terminals (provided they support unicode), the prefered
-#  font for this game is NOT a monospaced font. In Ubuntu I used Aegean.
+# font for this game is NOT a monospaced font. In Ubuntu I used Aegean.
 
 # You will also want to increase the font size so the pips can be seen more easily. I used size 17.
 # There are other fonts that work well, I just happened to pick Aegean.
@@ -13,10 +13,10 @@ from random import shuffle, randint
 import string
 
 def domino_horiz(a,b):
-    return '🀱🀲🀳🀴🀵🀶🀷🀸🀹🀺🀻🀼🀽🀾🀿🁀🁁🁂🁃🁄🁅🁆🁇🁈🁉🁊🁋🁌🁍🁎🁏🁐🁑🁒🁓🁔🁕🁖🁗🁘🁙🁚🁛🁜🁝🁞🁟🁠🁡🀰'.decode('utf-8')[(7*a)+b]
+    return '🀱🀲🀳🀴🀵🀶🀷🀸🀹🀺🀻🀼🀽🀾🀿🁀🁁🁂🁃🁄🁅🁆🁇🁈🁉🁊🁋🁌🁍🁎🁏🁐🁑🁒🁓🁔🁕🁖🁗🁘🁙🁚🁛🁜🁝🁞🁟🁠🁡🀰'[(7*a)+b]
 
 def domino_vert(a,b):
-    return '🁣🁤🁥🁦🁧🁨🁩🁪🁫🁬🁭🁮🁯🁰🁱🁲🁳🁴🁵🁶🁷🁸🁹🁺🁻🁼🁽🁾🁿🂀🂁🂂🂃🂄🂅🂆🂇🂈🂉🂊🂋🂌🂍🂎🂏🂐🂑🂒🂓🁢'.decode('utf-8')[(7*a)+b]
+    return '🁣🁤🁥🁦🁧🁨🁩🁪🁫🁬🁭🁮🁯🁰🁱🁲🁳🁴🁵🁶🁷🁸🁹🁺🁻🁼🁽🁾🁿🂀🂁🂂🂃🂄🂅🂆🂇🂈🂉🂊🂋🂌🂍🂎🂏🂐🂑🂒🂓🁢'[(7*a)+b]
 
 def get_new_set():
     set = []
@@ -26,19 +26,19 @@ def get_new_set():
     return set
 
 def deal(set):
-    return [set.pop() for piece in xrange(7)], [set.pop() for piece in xrange(7)], set
+    return [set.pop() for piece in range(7)], [set.pop() for piece in range(7)], set
 
 def display_hand(hand):
     for piece in hand:
-        print domino_vert(*piece),
+        print(domino_vert(*piece), end=' ')
 
 def display_backs(hand):
     for piece in hand:
-        print domino_vert(0, -1),
+        print(domino_vert(0, -1), end=' ')
 
 def display_line(line):
     for piece in line:
-        print domino_horiz(*piece),
+        print(domino_horiz(*piece), end=' ')
 
 def pip_count(hand):
     return sum(sum(hand, ()))
@@ -58,7 +58,7 @@ def place_piece(line, piece):
         picked = (left == right)
         while not picked:
             picked = True
-            side = raw_input('╰> ')[0]
+            side = input('╰> ')[0]
             if side in '.>lL':
                 state[0] = False
             elif side in ',<rR':
@@ -119,13 +119,13 @@ def main():
     line = []
     gameover = False
     while (not gameover):
-        print '--'
+        print('--')
         display_backs(ai_hand)
-        print ''
+        print('')
         display_line(line)
-        print ''
+        print('')
         display_hand(player_hand)
-        print ''
+        print('')
                                                     # this bit here needs to be modified for games with a stock
         if len(ai_hand) == 0 or len(player_hand) == 0 or (no_moves(line, player_hand) and no_moves(line, ai_hand)):
             gameover = True
@@ -135,8 +135,8 @@ def main():
             placed = False
             while not placed:
                 choice = None
-                while choice not in range(1, 1+len(player_hand)):
-                    choice = raw_input('> ')
+                while choice not in list(range(1, 1+len(player_hand))):
+                    choice = input('> ')
                     if choice not in string.digits:
                         continue
                     choice = int(choice)
@@ -145,8 +145,9 @@ def main():
 
         ai_go(line, ai_hand)
 
-    print pip_count(ai_hand) - pip_count(player_hand),
+    print(pip_count(ai_hand) - pip_count(player_hand), end=' ')
     display_hand(ai_hand)
+    print()
 
 if __name__ == '__main__':
     main()
