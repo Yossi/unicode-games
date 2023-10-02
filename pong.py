@@ -9,9 +9,9 @@ demo to see what this looks like
 ䷩䷉䷀䷀䷁䷀䷀䷀䷨
 '''
 
-puck = u'䷀䷌䷉䷈䷍'
-negpuck = u'䷁䷆䷎䷏䷇'
-paddle = u' ䷋䷩䷨䷊'
+puck = '䷀䷌䷉䷈䷍'
+negpuck = '䷁䷆䷎䷏䷇'
+paddle = ' ䷋䷩䷨䷊'
 board = [0,0,0,0,0,0,0]
 
 path =  [1,1,2,2,3,3,4]
@@ -20,7 +20,7 @@ p2 = 4
 
 def draw():
         game = ''
-        for i in xrange(7):
+        for i in range(7):
                 if i!=3:
                         game += puck[board[i]]
                 else:
@@ -28,7 +28,7 @@ def draw():
         return paddle[p1] + game + paddle[p2]
 
 position = -1
-for i in xrange(19):
+for i in range(19):
         sleep(.5)
         board[position] = 0
         if i >= 7 and i < 13:
@@ -38,4 +38,4 @@ for i in xrange(19):
 
         board[position] = path[position]
         p2 = path[position]
-        print draw()
+        print(draw())
