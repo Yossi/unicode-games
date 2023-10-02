@@ -3,6 +3,7 @@
 #import readline # Allow command-line style user input in *nix. windows doesnt have this module.
 from operator import and_ # Useful and operator.
 import copy
+from functools import reduce
 
 # Default maximum board size.
 MAX_SIZE = 40
@@ -49,7 +50,7 @@ class Flipem(Game):
     def __init__(self):
         Game.__init__(self)
         self.size = self.__in(SIZE_MSG, MAX_SIZE)
-        self.span = xrange(self.size)
+        self.span = range(self.size)
         self.board = [[False for x in self.span] for y in self.span]
         self.moves = copy.deepcopy(self.board)
         self.score = 0
@@ -59,53 +60,53 @@ class Flipem(Game):
 
     def display(self):
         for line in (' '.join(map(GET_CHAR, row)) for row in self.board):
-            print line
-        print SCORE_MSG, str(self.score)
+            print(line)
+        print(SCORE_MSG, str(self.score))
         
     def displayMoves(self):
         for line in (' '.join(map(GET_CHAR, row)) for row in self.moves):
-            print line
-        print SCORE_MSG, str(self.score)
+            print(line)
+        print(SCORE_MSG, str(self.score))
 
     def get(self):
-        return map(lambda s: self.__in(s, self.size) - 1, (ROW_MSG, COL_MSG))
+        return [self.__in(s, self.size) - 1 for s in (ROW_MSG, COL_MSG)]
 
     def flip(self, x, y):
         for a, b in (x, y), (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1):
-            if reduce(and_, map(lambda i: i >= 0 and i < self.size, (a, b))):
+            if reduce(and_, [i >= 0 and i < self.size for i in (a, b)]):
                 self.board[a][b] = not self.board[a][b]
         self.score += 1
         self.moves[x][y] = not self.moves[x][y]
 
     def end(self):
         if self.aborted:
-            print BYE_MSG
+            print(BYE_MSG)
         else:
             self.display()
-            print WIN_MSG
+            print(WIN_MSG)
 
     def __in(self, msg, maxsize):
         while not self.aborted:
             try:
-                input = raw_input(PROMPT(msg))
-                size = int(input)
+                input_ = input(PROMPT(msg))
+                size = int(input_)
                 if size < 1:
-                    print NOT_VALID(NEG_MSG, maxsize)
+                    print(NOT_VALID(NEG_MSG, maxsize))
                 elif size > maxsize:
-                    print NOT_VALID(HIGH_MSG, maxsize)
+                    print(NOT_VALID(HIGH_MSG, maxsize))
                 else:
                     return size
             except (KeyboardInterrupt, EOFError):
-                print
+                print()
                 self.quit()
-            except ValueError, e:
-                input = input.strip().lower()
-                if input in EXITS:
+            except ValueError as e:
+                input_ = input_.strip().lower()
+                if input_ in EXITS:
                     self.quit()
-                elif input in MOVES:
+                elif input_ in MOVES:
                     self.displayMoves()
                 else:
-                    print NOT_VALID(DEC_MSG, maxsize)
+                    print(NOT_VALID(DEC_MSG, maxsize))
         return 0
 
 if __name__ == '__main__':
